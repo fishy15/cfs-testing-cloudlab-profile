@@ -8,7 +8,8 @@ sudo apt install -y git fakeroot build-essential ncurses-dev xz-utils libssl-dev
 cd /local/
 
 # create workspace
-mkcd research/
+mkdir research/
+cd research/
 
 git clone https://github.com/fishy15/linux-cfs-testing --depth=1 kernel/
 
@@ -16,5 +17,7 @@ mkdir build/
 cd build/
 cp ../kernel/myconfig .config
 
-make -C ../kernel O="$(pwd)" -j16
+# move config files
+cp /local/repository/build /local/research/
+
 
