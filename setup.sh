@@ -18,6 +18,6 @@ cd build/
 cp ../kernel/myconfig .config
 
 # move config files
-cp /local/repository/build /local/research/
+cp /local/repository/build-kernel /local/research/
 
 
