@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # For setting up the repository on CloudLab
 #
 sudo apt update && sudo apt -y upgrade
