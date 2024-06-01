@@ -3,7 +3,7 @@
 # For setting up the repository on CloudLab
 #
 sudo apt update && sudo apt -y upgrade
-sudo apt install -y git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+sudo apt install -y git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison qemu-system-x86
 
 cd /local/
 
