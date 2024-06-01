@@ -20,5 +20,6 @@ cp ../kernel/myconfig .config
 # move config files
 cp /local/repository/build-kernel /local/research/
 cp /local/repository/runvm /local/research/
+cp /local/repository/lfs /local/research
 
 
