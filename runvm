@@ -16,7 +16,8 @@ fi
 qemu-system-x86_64 \
     -nographic -m 4G $1 \
     -netdev user,id=net0,hostfwd=tcp::2222-:22 \
-    -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" -kernel build/arch/x86/boot/bzImag\
+    -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" \
+    -kernel build/arch/x86/boot/bzImage \
     -smp cpus=1
     #-append "root=/dev/sda1 console=ttyS0,115200n8"
     #pti=on" \
