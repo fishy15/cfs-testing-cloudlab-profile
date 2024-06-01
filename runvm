@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -x
+if [ -z $1 ]; then
+    echo "provide a disk image as \$1 please"
+    exit 1
+fi
+
+echo "$1" | grep "\.qcow2$" > /dev/null
+if [ "$?" = "0" ]; then
+    drive="/dev/sda1"
+else
+    drive="/dev/sda"
+fi
+
+qemu-system-x86_64 \
+    -nographic -m 4G $1 \
+    -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+    -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" -kernel build/arch/x86/boot/bzImag\
+    -smp cpus=1
+    #-append "root=/dev/sda1 console=ttyS0,115200n8"
+    #pti=on" \
+    #-device virtio-net-pci,netdev=net0 \
+    #-object memory-backend-ram,size=1G,id=m0 \
+    #-object memory-backend-ram,size=1G,id=m1 \
+    #-object memory-backend-ram,size=1G,id=m2 \
+    #-object memory-backend-ram,size=1G,id=m3 \
+    # -netdev user,id=net0 \
+    #-cpu host \
+    #-machine type=q35,accel=hvf
+    # -numa node,cpus=0-3,nodeid=0,memdev=m0 \
+    # -numa node,cpus=4-7,nodeid=1,memdev=m1 \
+    # -numa node,cpus=8-11,nodeid=2,memdev=m2 \
+    # -numa node,cpus=12-15,nodeid=3,memdev=m3 \
+    # debian.qcow2 \
+    # lfs0.rawimg \
