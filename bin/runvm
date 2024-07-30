@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")/.."
+
 set -x
 if [ -z $1 ]; then
     echo "provide a disk image as \$1 please"
