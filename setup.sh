@@ -28,7 +28,7 @@ cp -r /local/repository/bin /local/research
 cp /local/repository/lfs /local/research
 
 # set up qemu
-sudo apt install meson ninja-build libglib2.0-dev libslirp-dev flex bison python3-pip python3-venv
+sudo apt install -y meson ninja-build libglib2.0-dev libslirp-dev flex bison python3-pip python3-venv
 pip install tomli
 cd /local/research
 git clone https://gitlab.com/qemu-project/qemu.git
