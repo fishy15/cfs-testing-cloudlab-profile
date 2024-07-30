@@ -31,10 +31,14 @@ cp /local/repository/lfs /local/research
 sudo apt install meson ninja-build libglib2.0-dev libslirp-dev flex bison python3-pip python3-venv
 pip install tomli
 cd /local/research
+git clone https://gitlab.com/qemu-project/qemu.git
 mkdir -p qemu/build
 cd qemu/build
-../configure --enable-slirp && make -j`nproc`
-ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
+sudo ../configure --enable-slirp && sudo make -j`nproc`
+sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
 
 # add bin to PATH
 echo 'export PATH="$PATH:/local/research/bin"' >> ~/.bashrc
+
+# change permissions
+sudo chown -R aprakas /local/research
