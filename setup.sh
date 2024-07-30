@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # For setting up the repository on CloudLab
 #
 sudo apt update && sudo apt -y upgrade
@@ -38,7 +40,7 @@ sudo ../configure --enable-slirp && sudo make -j`nproc`
 sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
 
 # add bin to PATH
-echo 'export PATH="$PATH:/local/research/bin"' >> ~/.bashrc
+echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a ~/.bashrc
 
 # change permissions
 sudo chown -R aprakas /local/research
