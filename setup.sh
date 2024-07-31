@@ -40,7 +40,7 @@ sudo ../configure --enable-slirp && sudo make -j`nproc`
 sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
 
 # add bin to PATH
-echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a ~/.bashrc
+echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a /users/aprakas/.bashrc
 
 # change permissions
 sudo chown -R aprakas /local/research
