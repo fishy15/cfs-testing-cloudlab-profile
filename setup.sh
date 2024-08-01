@@ -43,8 +43,12 @@ sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
 echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a /users/aprakas/.bashrc
 
 # set up gdbinit
-echo "add-auto-load-safe-path /local/research/kernel/scripts/gdb/vmlinux-gdb.py" | sudo tee -a /users/aprakas/.config/gdb/gdbinit
-sudo chown aprakas /users/aprakas/.config/gdb/gdbinit
+CONFIG="/users/aprakas/.config"
+mkdir -p "$CONFIG"
+mkdir -p "$CONFIG/gdb"
+touch "$CONFIG/gdb/gdbinit"
+echo "add-auto-load-safe-path /local/research/kernel/scripts/gdb/vmlinux-gdb.py" | sudo tee -a "$CONFIG/gdb/gdbinit"
+sudo chown aprakas "$CONFIG"
 
 # change permissions
 sudo chown -R aprakas /local/research
