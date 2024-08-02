@@ -44,9 +44,9 @@ echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a /users/aprakas/.bas
 
 # set up gdbinit
 CONFIG="/users/aprakas/.config"
-mkdir -p "$CONFIG"
-mkdir -p "$CONFIG/gdb"
-touch "$CONFIG/gdb/gdbinit"
+sudo mkdir -p "$CONFIG"
+sudo mkdir -p "$CONFIG/gdb"
+sudo touch "$CONFIG/gdb/gdbinit"
 echo "add-auto-load-safe-path /local/research/kernel/scripts/gdb/vmlinux-gdb.py" | sudo tee -a "$CONFIG/gdb/gdbinit"
 sudo chown aprakas "$CONFIG"
 
