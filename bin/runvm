@@ -8,6 +8,24 @@ if [ -z $1 ]; then
     exit 1
 fi
 
+if [ -z $CORES ]; then
+    echo "using a default number of 1 core"
+    topology="-smp cpus=1"
+elif [ "$CORES" = "16tiered" ]; then
+    topology="\
+        -object memory-backend-ram,size=1G,id=m0 \
+        -object memory-backend-ram,size=1G,id=m1 \
+        -object memory-backend-ram,size=1G,id=m2 \
+        -object memory-backend-ram,size=1G,id=m3 \
+        -numa node,cpus=0-3,nodeid=0,memdev=m0 \
+        -numa node,cpus=4-7,nodeid=1,memdev=m1 \
+        -numa node,cpus=8-11,nodeid=2,memdev=m2 \
+        -numa node,cpus=12-15,nodeid=3,memdev=m3 \
+        -smp cpus=16"
+else
+    topology="-smp cpus=$CORES"
+fi
+
 echo "$1" | grep "\.qcow2$" > /dev/null
 if [ "$?" = "0" ]; then
     drive="/dev/sda1"
@@ -20,20 +38,4 @@ qemu-system-x86_64 \
     -netdev user,id=net0,hostfwd=tcp::2222-:22 \
     -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" \
     -kernel kbuild/arch/x86/boot/bzImage \
-    -smp cpus=1
-    #-append "root=/dev/sda1 console=ttyS0,115200n8"
-    #pti=on" \
-    #-device virtio-net-pci,netdev=net0 \
-    #-object memory-backend-ram,size=1G,id=m0 \
-    #-object memory-backend-ram,size=1G,id=m1 \
-    #-object memory-backend-ram,size=1G,id=m2 \
-    #-object memory-backend-ram,size=1G,id=m3 \
-    # -netdev user,id=net0 \
-    #-cpu host \
-    #-machine type=q35,accel=hvf
-    # -numa node,cpus=0-3,nodeid=0,memdev=m0 \
-    # -numa node,cpus=4-7,nodeid=1,memdev=m1 \
-    # -numa node,cpus=8-11,nodeid=2,memdev=m2 \
-    # -numa node,cpus=12-15,nodeid=3,memdev=m3 \
-    # debian.qcow2 \
-    # lfs0.rawimg \
+    $topology
