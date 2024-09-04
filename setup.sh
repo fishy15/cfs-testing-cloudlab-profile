@@ -52,3 +52,10 @@ sudo chown aprakas "$CONFIG"
 
 # change permissions
 sudo chown -R aprakas /local/research
+
+# emacs init
+mkdir -p ~aprakas/.emacs.d
+cp init.el ~aprakas/.emacs.d
+
+# vim init
+cp .vimrc ~aprakas/.vimrc
