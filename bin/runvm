@@ -38,4 +38,5 @@ qemu-system-x86_64 \
     -netdev user,id=net0,hostfwd=tcp::2222-:22 \
     -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" \
     -kernel kbuild/arch/x86/boot/bzImage \
+	-accel tcg,thread=single \
     $topology
