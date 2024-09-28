@@ -2,6 +2,12 @@
 
 cd "$(dirname "$0")/.."
 
-TOPOLOGY="$TOPOLOGY" runvm lfs -s -S  >/dev/null 2>&1 &
-gdb kbuild/vmlinux --batch -ex "py TOPOLOGY=\"$TOPOLOGY\"" -x kernel/dumper.py
-killall qemu-system-x86_64
+if [ -z $ATTACH ]; then
+    TOPOLOGY="$TOPOLOGY" runvm lfs -s -S  >/dev/null 2>&1 &
+fi
+
+gdb kbuild/vmlinux -ex "py TOPOLOGY=\"$TOPOLOGY\"" -x kernel/dumper.py
+
+if [ -z $ATTACH ]; then
+    killall qemu-system-x86_64
+fi
