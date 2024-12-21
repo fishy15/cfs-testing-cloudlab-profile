@@ -2,3 +2,4 @@
 
 cd "$(dirname "$0")/../kbuild"
 make -C ../kernel O="$(pwd)" -j16
+make scripts_gdb -C ../kernel O="$(pwd)" -j16

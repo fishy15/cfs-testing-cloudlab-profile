@@ -9,9 +9,9 @@ if [ -z $1 ]; then
 fi
 
 if [ -z $CORES ]; then
-    echo "using a default number of 1 core"
-    topology="-smp cpus=1"
-elif [ "$CORES" = "16tiered" ]; then
+    echo "using a default number of 2 cores"
+    topology="-smp cpus=2"
+elif [ "$CORES" = "16-tiered" ]; then
     topology="\
         -object memory-backend-ram,size=1G,id=m0 \
         -object memory-backend-ram,size=1G,id=m1 \
@@ -38,4 +38,5 @@ qemu-system-x86_64 \
     -netdev user,id=net0,hostfwd=tcp::2222-:22 \
     -append "root=$drive rw console=tty0 console=ttyS0,115200n8 sched_verbose" \
     -kernel kbuild/arch/x86/boot/bzImage \
+	-accel tcg,thread=single \
     $topology
