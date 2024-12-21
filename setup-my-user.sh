@@ -9,8 +9,7 @@ cd ~/rsch/
 
 git clone https://github.com/fishy15/linux-cfs-testing --depth=1 -b logging kernel/
 
-touch ~/.bashrc
-echo 'export PATH=$PATH:~/rsch/kernel/logging-scripts'
+echo 'export PATH=$PATH:~/rsch/kernel/logging-scripts' >> ~./bashrc
 source ~/.bashrc
 
 mkdir kbuild/
