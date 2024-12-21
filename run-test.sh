@@ -8,11 +8,9 @@ TASK=$2
 USER_NUMBER=$3
 
 USER="user-$USER_NUMBER"
-USERH="/$USER"
+USERH="/mydata/$USER"
 
 sudo mkdir -p $USERH
-sudo /usr/local/etc/emulab/mkextrafs.pl $USERH
-
 sudo useradd $USER
 sudo usermod -d $USERH $USER
 sudo chown $USER:$USER $USERH
