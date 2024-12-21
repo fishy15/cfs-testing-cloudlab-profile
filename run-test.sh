@@ -7,12 +7,16 @@ TOPOLOGY=$1
 TASK=$2
 USER_NUMBER=$3
 
-USER="user-$TOPOLOGY-$TASK-$USER_NUMBER"
+USER="user-$USER_NUMBER"
+USERH="/$USER"
+
+sudo mkdir -p $USERH
+sudo /usr/local/etc/emulab/mkextrafs.pl $USERH
 
 sudo useradd $USER
-sudo mkdir ~$USER
-sudo chown $USER:$USER ~$USER
+sudo usermod -d $USERH $USER
+sudo chown $USER:$USER $USERH
 sudo chsh $USER -s /bin/bash
 
-sudo -u $USER /local/repository/setup-my-user.sh
-TOPOLOGY=$TOPOLOGY TASK=$TASK USER_NUMBER=$USER_NUMBER sudo -u $USER /local/repository/run-test-as-user.sh
+sudo -Hiu $USER /local/repository/setup-my-user.sh
+TOPOLOGY=$TOPOLOGY TASK=$TASK USER_NUMBER=$USER_NUMBER sudo -Hiu $USER /local/repository/run-test-as-user.sh
