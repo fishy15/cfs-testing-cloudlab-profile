@@ -13,42 +13,14 @@ cd /local/
 cd repository/
 git lfs install
 git lfs pull
-cd ..
 
-# create workspace
-mkdir research/
-cd research/
+# install aws cli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 
-git clone https://github.com/fishy15/linux-cfs-testing --depth=1 kernel/
+aws configure set aws_access_key_id AKIAXHHN5W6YCKRKI77C
+aws configure set aws_secret_access_key 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
+aws configure set region us-west-1
 
-mkdir kbuild/
-cd kbuild/
-cp ../kernel/myconfig .config
-
-# move config files
-cp -r /local/repository/bin /local/research
-cp /local/repository/lfs /local/research
-
-# set up qemu
-sudo apt install -y meson ninja-build libglib2.0-dev libslirp-dev flex bison python3-pip python3-venv
-pip install tomli
-cd /local/research
-git clone https://gitlab.com/qemu-project/qemu.git
-mkdir -p qemu/build
-cd qemu/build
-sudo ../configure --enable-slirp && sudo make -j`nproc`
-sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
-
-# add bin to PATH
-echo 'export PATH="$PATH:/local/research/bin"' | sudo tee -a /users/aprakas/.bashrc
-
-# set up gdbinit
-CONFIG="/users/aprakas/.config"
-sudo mkdir -p "$CONFIG"
-sudo mkdir -p "$CONFIG/gdb"
-sudo touch "$CONFIG/gdb/gdbinit"
-echo "add-auto-load-safe-path /local/research/kernel/scripts/gdb/vmlinux-gdb.py" | sudo tee -a "$CONFIG/gdb/gdbinit"
-sudo chown aprakas "$CONFIG"
-
-# change permissions
-sudo chown -R aprakas /local/research
+aws s3 cp s3://fishy15-vms-for-scheduler-logging/d.q d.q
