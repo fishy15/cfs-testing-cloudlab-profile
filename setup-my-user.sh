@@ -1,16 +1,13 @@
 #!/bin/bash
 
 set -x
+set -e
 
 # create workspace
 mkdir ~/rsch/
 cd ~/rsch/
 
-git clone https://github.com/fishy15/linux-cfs-testing --depth=1 kernel/
-cd kernel
-git pull origin logging
-git checkout -b logging FETCH_HEAD
-cd ..
+git clone https://github.com/fishy15/linux-cfs-testing --depth=1 -b logging kernel/
 
 touch ~/.bashrc
 echo 'export PATH=$PATH:~/rsch/kernel/logging-scripts'
@@ -42,7 +39,7 @@ ln -s /local/repository/d.q ~aprakas/rsch/d.q
 # sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
 
 # set up gdbinit
-CONFIG="~/.config"
+CONFIG="$HOME/.config"
 mkdir -p "$CONFIG"
 mkdir -p "$CONFIG/gdb"
 touch "$CONFIG/gdb/gdbinit"
