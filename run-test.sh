@@ -11,10 +11,11 @@ USER="user-$USER_NUMBER"
 USERH="/mydata/$USER"
 
 sudo mkdir -p $USERH
+
 sudo useradd $USER
 sudo usermod -d $USERH $USER
 sudo chown $USER:$USER $USERH
 sudo chsh $USER -s /bin/bash
 
 sudo -Hiu $USER /local/repository/setup-my-user.sh
-TOPOLOGY=$TOPOLOGY TASK=$TASK USER_NUMBER=$USER_NUMBER sudo -Hiu $USER /local/repository/run-test-as-user.sh
+sudo -Hiu $USER /local/repository/run-test-as-user.sh "$TOPOLOGY" "$TASK" "$USER_NUMBER"
