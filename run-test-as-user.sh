@@ -12,12 +12,15 @@ SCRIPTS="$HOME/rsch/kernel/logging-scripts"
 GDB=$(bc <<<"2222 + $USER_NUMBER")
 SSH=$(bc <<<"3333 + $USER_NUMBER")
 
-f=$(mktemp)
-rm -f $f
-TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH "$SCRIPTS/runvm" d.q >$f &
+# f=$(mktemp)
+# rm -f $f
+# touch $f
+TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH "$SCRIPTS/runvm" d.q &
 #grep "localhost login:" $f | tail -n1
-tail -f $f | grep "Debian GNU/Linux 12 localhost ttyS0" $f | tail -n1
-echo "grep exited, running swk"
+# tail -f $f | grep "localhost login:" | head -n1
+# echo "grep exited, running swk"
+
+sleep 30
 
 # swk will store out.json under $HOME
-ITERS=1 TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH $SCRIPTS/swk out.json "$TASK"
+ITERS=32 TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH $SCRIPTS/swk out.json "$TASK"
