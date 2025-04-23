@@ -7,15 +7,14 @@ TOPOLOGY=$1
 TASK=$2
 USER_NUMBER=$3
 
-SCRIPTS="$HOME/rsch/kernel/logging-scripts"
+SCRIPTS="$HOME/linux/"
 
-GDB=$(bc <<<"2222 + $USER_NUMBER")
 SSH=$(bc <<<"3333 + $USER_NUMBER")
 
 # f=$(mktemp)
 # rm -f $f
 # touch $f
-TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH "$SCRIPTS/runvm" d.q &
+K=1 TOPOLOGY=$TOPOLOGY SSH=$SSH "$SCRIPTS/run.sh" &
 #grep "localhost login:" $f | tail -n1
 # tail -f $f | grep "localhost login:" | head -n1
 # echo "grep exited, running swk"
@@ -23,4 +22,6 @@ TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH "$SCRIPTS/runvm" d.q &
 sleep 30
 
 # swk will store out.json under $HOME
-ITERS=32 TOPOLOGY=$TOPOLOGY GDB=$GDB SSH=$SSH $SCRIPTS/swk out.json "$TASK"
+TOPOLOGY=$TOPOLOGY SSH=$SSH $SCRIPTS/swk out.json "$TASK"
+
+pkill qemu # kill qemu in the background

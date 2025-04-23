@@ -3,46 +3,24 @@
 set -x
 set -e
 
-SCRIPTS="$HOME/rsch/kernel/logging-scripts"
+LINUX="$HOME/linux"
 
-# create workspace
-mkdir -p ~/rsch/
-cd ~/rsch/
-
-git clone https://github.com/fishy15/linux-cfs-testing --depth=1 -b logging kernel/
+cd "$HOME"
+git clone https://github.com/fishy15/linux-cfs-testing --depth=1 linux/
 
 touch ~/.bashrc
-echo 'export PATH=$PATH:~/rsch/kernel/logging-scripts' >> ~/.bashrc
+echo 'export PATH=$PATH:~/linux' >> ~/.bashrc
 source ~/.bashrc
 
-mkdir kbuild/
-cd kbuild/
-cp ../kernel/myconfig .config
-
-"$SCRIPTS/build-kernel"
+"$LINUX/setup.sh"
+source ~/.bashrc # add rust to path
+"$LINUX/compile.sh"
 
 # move config files
-cp /local/repository/lfs ~/rsch/lfs
+mkdir "$HOME/vm"
+cp /local/repository/d.q "$HOME/vm/d.q"
 
-cp /local/repository/d.q "$HOME/rsch/d.q"
-
-# set up qemu
-# sudo apt install -y meson ninja-build libglib2.0-dev libslirp-dev flex bison python3-pip python3-venv
-# pip install tomli
-# cd /local/research
-# git clone https://gitlab.com/qemu-project/qemu.git
-# mkdir -p qemu/build
-# cd qemu/build
-# sudo ../configure --enable-slirp && sudo make -j`nproc`
-# sudo ln -s /local/research/qemu/build/qemu-system-x86_64 /local/research/bin/qxd
-
-# set up gdbinit
-CONFIG="$HOME/.config"
-mkdir -p "$CONFIG"
-mkdir -p "$CONFIG/gdb"
-echo "add-auto-load-safe-path ~/rsch/kernel/scripts/gdb/vmlinux-gdb.py" >> "$CONFIG/gdb/gdbinit"
-
-gcc "$SCRIPTS/swk.c" -o "$SCRIPTS/swk"
+gcc "$LINUX/swk.c" -o "$LINUX/swk"
 
 # add private key to log onto d.q
 private_key=$(cat <<EOF
