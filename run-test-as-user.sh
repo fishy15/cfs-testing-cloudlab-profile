@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## Helper script, what each user runs in `run-test.sh`
+
 set -x
 set -e
 

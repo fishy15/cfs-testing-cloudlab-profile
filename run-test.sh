@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## Creates a user for the test, then collects data on the specified topology and task
+## Collects data from core 0
+
 set -x
 set -e
 
